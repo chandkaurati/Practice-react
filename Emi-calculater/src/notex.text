@@ -1,0 +1,16 @@
+####
+crete a state to store the input feilds 
+
+task == calculate the logic of min max down payment also total Emi per month
+
+math.toFixed()
+
+funcriotn calculateEmi(e){
+   const dp = Number(e.taget.value)
+   //
+    cost = cost - dp
+    //total cost of loan with intrest
+   const totalCost = (intrest/100) * cost 
+   cost emi = totalCost/trenue
+  
+}
