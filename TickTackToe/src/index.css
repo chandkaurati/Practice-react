@@ -1,0 +1,14 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.square {
+  font: large;
+  border: 1px solid black;
+  width: 250px;
+  height: 100px;
+}
+
+.board-row {
+  display: flex;
+}
