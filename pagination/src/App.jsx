@@ -5,10 +5,15 @@ function App() {
   const [Products, setProducts] = useState([]);
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [page, setPage] = useState(2);
+  const [page, setPage] = useState(1);
 
   const handleClick = (selectedPage) => {
-    setPage(selectedPage);
+    if (
+      selectedPage >= 1 &&
+      selectedPage <= Products.length / 10 &&
+      selectedPage !== page
+    )
+      setPage(selectedPage);
   };
 
   useEffect(() => {
@@ -30,9 +35,7 @@ function App() {
 
     fetChProducts();
   }, []);
-
   if (error) return <div style={{ color: "red" }}>{error.message}</div>;
-
   return (
     <>
       {loading ? (
@@ -49,15 +52,28 @@ function App() {
           </div>
 
           <div>
-            <span></span>
+            <span
+              className={`page__num ${page <= 1 ? "hidden" : ""}`}
+              onClick={() => handleClick(page - 1)}
+            >
+              ⬅️
+            </span>
             {Products.slice(0, Products.length / 10).map((_, i) => {
               return (
-                <span className="page__num" onClick={() => handleClick(i + 1)}>
+                <span
+                  className={`page__num ${page === i + 1 ? "selected" : ""}`}
+                  onClick={() => handleClick(i + 1)}
+                >
                   {i + 1}
                 </span>
               );
             })}
-            <span></span>
+            <span
+              className={`page__num ${page === Products.length / 10 ? "hidden" : ""}`}
+              onClick={() => handleClick(page + 1)}
+            >
+              ➡️
+            </span>
           </div>
         </>
       )}
