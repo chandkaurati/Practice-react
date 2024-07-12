@@ -25,7 +25,7 @@ function App() {
 
   return (
     <div className="app">
-      {/* password length  */}
+
       <div className="header">
         {password && (
           <div className="password">
@@ -47,6 +47,14 @@ function App() {
         />
       </div>
 
+      {/* strnegth */}
+
+      {/* Error handling */}
+
+      {errMessage && (
+        <p style={{color : "red"}}>{errMessage}</p>
+      )}
+
       <div className="checkboxes">
         {checkBoxData.map((data, i) => (
           <div key={i}>
@@ -61,7 +69,7 @@ function App() {
       </div>
 
       <div className="genratePasswordBtn">
-        <Button classes={""} title={"genrate  password"} />
+        <Button classes={""} title={"genrate  password"} clickHandle={()=> genratePassword(checkBoxData, passwordLength)} />
       </div>
     </div>
   );

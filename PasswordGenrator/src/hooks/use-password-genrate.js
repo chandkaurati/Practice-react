@@ -10,8 +10,8 @@ const usePasswordGenrator = () => {
 
     let FilterdCheckboxData = checkboxData?.filter((data) => data.state);
 
-    if (FilterdCheckboxData.length === 0) {
-      setErrMessage("Please Select At least one option");
+    if (FilterdCheckboxData.length === 0 || length === 0 ) {
+      setErrMessage("Please select Length and at least one option properly ");
       setPassword("");
       return;
     }
@@ -37,11 +37,12 @@ const usePasswordGenrator = () => {
     });
 
     for (let i = 0; i < length; i++) {
-      let randomIndex = Math.floor(Math.random() * chaset.length);
+      let randomIndex = Math.floor(Math.random() * charset.length);
       GenratePassword += charset[randomIndex];
     }
 
     setPassword(GenratePassword);
+    setErrMessage("")
   };
 
   return { password, errMessage, genratePassword };
