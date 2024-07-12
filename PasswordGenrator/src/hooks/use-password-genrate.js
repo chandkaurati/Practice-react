@@ -5,24 +5,43 @@ const usePasswordGenrator = () => {
   const [errMessage, setErrMessage] = useState("");
 
   const genratePassword = (checkboxData, length) => {
-    let passwordString;
-    switch (checkboxData.title) {
-      case "include lowercase":
-        passwordString += "abcdefghijklmnopqrstuvwxyz";
-        break;
-      case "include upprcase":
-        passwordString += "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-        break;
-      case "include numbers":
-        passwordString += "1234567890";
-        break;
-      case "include spceial characters":
-        passwordString += "!@#$%^&*";
-        break;
+    let charset = "";
+    let GenratePassword = "";
 
-      default:
-        break;
+    let FilterdCheckboxData = checkboxData?.filter((data) => data.state);
+
+    if (FilterdCheckboxData.length === 0) {
+      setErrMessage("Please Select At least one option");
+      setPassword("");
+      return;
     }
+
+    FilterdCheckboxData.forEach((option) => {
+      switch (option.title) {
+        case "include lowercase":
+          charset += "abcdefghijklmnopqrstuvwxyz";
+          break;
+        case "include upprcase":
+          charset += "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+          break;
+        case "include numbers":
+          charset += "1234567890";
+          break;
+        case "include spceial characters":
+          charset += "!@#$%^&*";
+          break;
+
+        default:
+          break;
+      }
+    });
+
+    for (let i = 0; i < length; i++) {
+      let randomIndex = Math.floor(Math.random() * chaset.length);
+      GenratePassword += charset[randomIndex];
+    }
+
+    setPassword(GenratePassword);
   };
 
   return { password, errMessage, genratePassword };
