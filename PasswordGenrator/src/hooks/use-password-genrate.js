@@ -11,7 +11,7 @@ const usePasswordGenrator = () => {
     let FilterdCheckboxData = checkboxData?.filter((data) => data.state);
 
     if (FilterdCheckboxData.length === 0 || length === 0 ) {
-      setErrMessage("Please select Length and at least one option properly ");
+      setErrMessage(`Please select ${length === 0 ? "length and" :""} at least one option properly` );
       setPassword("");
       return;
     }

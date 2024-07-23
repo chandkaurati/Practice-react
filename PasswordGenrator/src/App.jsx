@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import Button from "./componants/button";
 import usePasswordGenrator from "./hooks/use-password-genrate";
 
@@ -14,12 +14,25 @@ function App() {
   const [passwordLength, setpasswordLength] = useState(0);
   const [includeNumbers, setincludeNumbers] = useState(false);
   const [includeSpecialChars, setincludeSpecialChars] = useState(false);
+  const [copied, setCopied] = useState(false)
+  const textRef=useRef(null)
 
   const handleCheckboxChange = (index) => {
     const updatedCheckboxData = [...checkBoxData];
     updatedCheckboxData[index].state = !updatedCheckboxData[index].state;
     setcheckBoxData(updatedCheckboxData);
   };
+
+  const hanldeCopytext = ()=>{
+     let selectedText = window.getSelection().toString()
+     let textToCopy = selectedText || textRef.current.innerText
+
+     navigator.clipboard.writeText(textToCopy)
+     setCopied(true)
+     setTimeout(() => {
+       setCopied(false)
+     }, 2000);
+  }
 
   const { password, errMessage, genratePassword } = usePasswordGenrator();
 
@@ -29,8 +42,8 @@ function App() {
       <div className="header">
         {password && (
           <div className="password">
-            <p>{password}</p>
-            <Button title={"copy"} />
+            <p ref={textRef}>{password}</p>
+            <Button title={copied?"copied" :"copy"} clickHandle={hanldeCopytext} />
           </div>
         )}
 
