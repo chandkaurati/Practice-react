@@ -6,8 +6,8 @@ import Cell from './Cell'
 
 function App() {
 
-  const [order , setOrder] = useState([])
-  const [isDeactivating, setIsDeactivating]  = useState(false)
+const [order , setOrder] = useState([])
+const [isDeactivating, setIsDeactivating]  = useState(false)
  const config = [
   [1,1,1,],
   [1,0,1,],
@@ -18,29 +18,27 @@ function App() {
 const deactivateCells = (index)=>{
   setIsDeactivating(true)
 
-  const timer = setInterval(() => {
-    setOrder((origOrder)=>{
-      const newOrder = origOrder.slice()
-      newOrder.pop()
-    })
+  let timer = setInterval(() => {
+      setOrder((originalOrder)=>{
+        const newOrder = originalOrder.slice()
+        newOrder.pop()
+        if(newOrder.length === 0){
+        clearInterval(timer)
+        setIsDeactivating(false)
+        }
+        return newOrder
+      })
 
-    if(newOrder.length === 0){
-      clearInterval(timer)
-      setIsDeactivating(false)
-    }
+  }, 300);
 
-  
-  },300);
-
-  return  newOrder
 }
  const handleCLick =  (index)=>{
     const newOrder = [...order, index]
     setOrder(newOrder)
-    console.log(newOrder)
+    // console.log(newOrder)
     // deactivation
     if(newOrder.length === config.flat(1).filter(Boolean).length){
-      // deactivateCells()
+      deactivateCells()
     }
  }
   return (
@@ -48,7 +46,12 @@ const deactivateCells = (index)=>{
     <div className="wrapper">
     <div className='grid' style={{gridTemplateColumns: `repeat(${config[0].length}, 1fr)`}}>
       {config.flat(1).map((el,index)=>{
-       return el?<Cell key={index} filled={order.includes(index)} onclick={()=> handleCLick(index)}/> : <span key={index}/>
+       return el?<Cell key={index} 
+       filled={order.includes(index)}
+       label = {`cell ${index}`}
+       isDisabeled ={order.includes(index)}
+       onclick={()=> handleCLick(index)}/> : <span key={index}/>
+       
       })}
     </div>
     </div>
