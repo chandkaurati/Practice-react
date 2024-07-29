@@ -9,30 +9,36 @@ function App() {
   const [downPayment, setDownPayment] = useState(0);
   const [tenure, setTenure] = useState(12);
   const [emi, setEmi] = useState(0);
+
   const rate = (1 / 100) * 40000;
 
   function calculateEmi(downPayment) {
     if (!cost) return;
+    console.log(downPayment)
     const loanAmt = cost - downPayment;
     const rateOfIntrest = intrest / 100;
     const numOfyears = tenure / 12;
-
     const EMI =
-      (loanAmt * rateOfIntrest * (1 + rateOfIntrest) ** numOfyears) /
-      ((1 + rateOfIntrest) ** numOfyears - 1);
-
+    (loanAmt * rateOfIntrest * (1 + rateOfIntrest) ** numOfyears) /
+    ((1 + rateOfIntrest) ** numOfyears - 1);
+    
+    console.log(EMI)
     return Number(EMI / 100).toFixed(0)
   }
+
+  console.log(calculateEmi(10000))
+
   function updateEmi(e) {
     if (!cost) return;
-
     const dp = parseInt(e.target.value);
     setDownPayment(dp.toFixed(0));
-
     const emi = calculateEmi(dp);
     setEmi(emi);
   }
-  function updateDownpayment(e) {}
+  function updateDownpayment(e){10000
+    if(!cost) return
+  }
+
   return (
     <>
       <div className="container">
@@ -43,7 +49,7 @@ function App() {
           <input
             type="number"
             value={cost}
-            onChange={(e) => setCost(e.target.value)}
+            onChange={(e) => setCost(Number(e.target.value))}
           />
         </span>
 
@@ -52,7 +58,7 @@ function App() {
           <input
             type="number"
             value={intrest}
-            onChange={(e) => setIntrest(e.target.value)}
+            onChange={(e) => setIntrest(Number(e.target.value))}
           />
         </span>
 
@@ -61,7 +67,7 @@ function App() {
           <input
             type="number"
             value={fee}
-            onChange={(e) => setFee(e.target.value)}
+            onChange={(e) => setFee(Number(e.target.value))}
           />
         </span>
 
